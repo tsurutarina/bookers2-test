@@ -13,3 +13,12 @@
  *= require_tree .
  *= require_self
  */
+
+
+.heart_red{
+  color:red !important;
+}
+
+/*.heart-blue{*/
+  /*color:blue !important;*/
+/*}*/
