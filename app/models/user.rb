@@ -11,11 +11,32 @@ class User < ApplicationRecord
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
+  # フォローした、されたの関係
+  has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+
+  # 一覧で使う
+  has_many :followings, through: :relationships, source: followed
+  has_many :followers, through: :reverse_of_relationships, source: :follower
+
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum:50 }
 
   def get_profile_image
     (profile_image.attached?) ? profile_image : 'no_image.jpg'
     # profile_image.variant(resize_to_limit: [width, height]).processed
+  end
+
+  # フォローした時の処理
+  def follow(user_id)
+    relationships.create(followed_id: user_id)
+  end
+  # リムる時の処理
+  def unfollow(user_id)
+    relationships.find_by(followed_id: user_id).destroy
+  end
+  # フォローしてるか判定？
+  def following?(user)
+    followings.include?(user)
   end
 end
