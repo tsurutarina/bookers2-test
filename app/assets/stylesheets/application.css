@@ -14,9 +14,12 @@
  *= require_self
  */
 
-
 .heart_red{
   color:red !important;
+}
+
+.heart_blue{
+  color:blue !important;
 }
 
 /*.follow_blue{*/

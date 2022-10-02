@@ -1,4 +1,6 @@
 class RelationshipsController < ApplicationController
+  # before_action :authenticate_user!
+  
   # フォローする
   def create
     current_user.follow(params[:user_id])

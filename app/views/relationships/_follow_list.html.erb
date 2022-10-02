@@ -1,6 +1,4 @@
-<% if users.exists? %>
-  <table class='table'>
-    <table>
+    <table class="table table-hover table-inverse">
       <thead>
         <tr>
           <th>image</th>
@@ -19,9 +17,6 @@
           <td>フォロワー数: <%= user.followers.count %></td>
           <td><%= link_to 'Show', user %></td>
         </tr>
+        <% end %>
       </tbody>
     </table>
-  <% end %>
-<% else %>
-  <p>ユーザーはいません</p>
-<% end %>
