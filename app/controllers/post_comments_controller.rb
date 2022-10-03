@@ -16,7 +16,6 @@ class PostCommentsController < ApplicationController
     # redirect_to request.referer
   end
 
-
   private
   def post_comment_params
     params.require(:post_comment).permit(:comment)
