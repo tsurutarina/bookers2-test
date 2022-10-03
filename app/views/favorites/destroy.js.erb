@@ -1,0 +1,2 @@
+<!--favorites_controllerのdestroyアクションで定義されたものが作用できる（？）-->
+$("#favorite-btn_<%= @book.id %>").html("<%= j(render 'favorites/favorite_btn', book: @book) %>");
