@@ -8,7 +8,7 @@
       <td><%= post_comment.comment %></td>
 
       <% if post_comment.user == current_user %>
-        <td><%= link_to 'Destroy', book_post_comment_path(post_comment.book, post_comment), method: :delete, remort: true, class: "btn btn-sm btn-danger"%></td>
+        <td><%= link_to 'Destroy', book_post_comment_path(post_comment.book, post_comment), method: :delete, remote: true, class: "btn btn-sm btn-danger" %></td>
       <% end %>
     </tr>
   <% end %>
