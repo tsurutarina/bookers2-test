@@ -1,0 +1,19 @@
+  <!--追加-->
+  <!--星レビュー-->
+  <div class="form-group row" id="star">
+    <%= f.label :star,'Rate', class:'col-md-3 col-form-label' %>
+    <%= f.hidden_field :star, id: :review_star %>
+  </div>
+  <script>
+  // これないとブラウザバック星増えるバグ発生する
+    $('#star').empty();
+    $('#star').raty({
+      size: 36,
+      starOff: '<%= asset_path('star-off.png') %>',
+      starOn: '<%= asset_path('star-on.png') %>',
+      // bookモデルstarカラムへ値保存の意
+      scoreName: 'book[star]',
+      // 半★なし
+      half: false,
+    });
+  </script>
