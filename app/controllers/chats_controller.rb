@@ -3,30 +3,30 @@ class ChatsController < ApplicationController
     #相手の情報取得
     @user = User.find(params[:id])
     # user_roomsテーブルのuser_idが自分のoom_idレコードを配列で取得
-    rooms = current_user.user_rooms.plick(:room_id)
+    rooms = current_user.user_rooms.pluck(:room_id)
     # user_idが相手、room_idが自分の属するroom_id(配列)となるuser_roomsテーブルのレコードを取得して、user_room変数に格納
     # これによって、自分と相手に共通room_idがあれば、そのroom_idと相手user_idがuser_room変数に格納される。存在してなければnil。
-    user_room = UserRoom.find_by(user_id: @user.id, room_id: rooms)
+    user_rooms = UserRoom.find_by(user_id: @user.id, room_id: rooms)
 
     # user_roomでルーム取得できなかった（ルームまだない）
-    room = nil
-    if user_room.nil?
+    unless user_rooms.nil?
+      @room = user_rooms.room
+    else
       # roomのid採番
-      room = Room.new
-      room.save
+      @room = Room.new
+      @room.save
       # 採番したroomのidを使って、二人共通のuser_roomのレコードを作る
       # 相手用 user.idとroom.idをUserRoomモデルのカラムに保存
-      UserRoom.create(user_id: user.id, room_id: room.id)
+      UserRoom.create(user_id: @user.id, room_id: @room.id)
       # 自分用
-      UserRoom.create(user_id: current_user.id, room_id: room.id)
-    else
-      # user_roomに紐づくroomsテーブルのレコードをroomに格納
-      room = user_room.room
+      UserRoom.create(user_id: current_user.id, room_id: @room.id)
     end
 
-    @chats = room.chats
-
-    @chat = Chat.new(room_id: room.id)
+    #roomに紐づくchatsテーブルのレコードをchatに格納
+    @chats = @room.chats
+    # form_withでチャット送信するための空インスタンス
+    # room.idを@chatに代入しないと、form_withで記述するroom.idに値が渡らない
+    @chat = Chat.new(room_id: @room.id)
   end
 
   def create
