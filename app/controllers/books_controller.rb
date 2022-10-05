@@ -11,7 +11,7 @@ class BooksController < ApplicationController
 
   def index
     @book = Book.new
-    @books = Book.all
+    # @books = Book.all
     @post_comment = PostComment.new
     # ランキング機能
     to = Time.current.at_end_of_day

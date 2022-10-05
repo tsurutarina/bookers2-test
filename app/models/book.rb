@@ -6,6 +6,7 @@ class Book < ApplicationRecord
   has_many :favorites, dependent: :destroy
   # いいねランク
   has_many :favorited_users, through: :favorites, source: :user
+  # has_many :week_favorites, -> { where(created_at: ((Time.current.at_end_of_day - 6.day).at_beginning_of_day)..(Time.current.at_end_of_day)) }, class_name: 'Favorite'
 
 
   validates :title,presence:true
