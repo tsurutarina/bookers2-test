@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     @books = @user.books
     @book = Book.new
     # @rooms = current_user.user_rooms.pluck(:room_id)
-    @user_room = UserRoom.find_by(user_id: @user.id, room_id: rooms)
+    # @user_room = UserRoom.find_by(user_id: @user.id, room_id: rooms)
   end
 
   def index
