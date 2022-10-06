@@ -22,7 +22,16 @@ class BooksController < ApplicationController
       a.favorited_users.includes(:favorites).where(created_at: from...to).size
     }
   end
-
+  # def index
+    # to  = Time.current.at_beginning_of_day
+    # from  = (to - 6.day).at_end_of_day
+    # @books = Book.all.sort {|a,b| 
+      # b.favorites.where(created_at: from...to).size <=> 
+      # a.favorites.where(created_at: from...to).size
+    # }
+    # @book = Book.new
+  # end
+  
   def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
