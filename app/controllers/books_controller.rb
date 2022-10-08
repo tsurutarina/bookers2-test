@@ -7,6 +7,11 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @user = @book.user
     @post_comment = PostComment.new
+    # 閲覧数表示するためのやつ？
+    @book_detail = Book.find(params[:id])
+    unless ViewCount.find_by(user_id: current_user.id, book_id: @book_detail.id)
+      current_user.view_counts.create(book_id: @book_detail.id)
+    end
   end
 
   def index
@@ -21,17 +26,22 @@ class BooksController < ApplicationController
       b.favorited_users.includes(:favorites).where(created_at: from...to).size <=>
       a.favorited_users.includes(:favorites).where(created_at: from...to).size
     }
+    # 閲覧数
+    @book_detail = Book.find_by(params[:id])
+    unless ViewCount.find_by(user_id: current_user.id, book_id: @book_detail.id)
+      current_user.view_counts.create(book_id: @book_detail.id)
+    end
   end
   # def index
     # to  = Time.current.at_beginning_of_day
     # from  = (to - 6.day).at_end_of_day
-    # @books = Book.all.sort {|a,b| 
-      # b.favorites.where(created_at: from...to).size <=> 
+    # @books = Book.all.sort {|a,b|
+      # b.favorites.where(created_at: from...to).size <=>
       # a.favorites.where(created_at: from...to).size
     # }
     # @book = Book.new
   # end
-  
+
   def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
