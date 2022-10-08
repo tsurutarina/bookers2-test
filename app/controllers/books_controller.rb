@@ -26,11 +26,6 @@ class BooksController < ApplicationController
       b.favorited_users.includes(:favorites).where(created_at: from...to).size <=>
       a.favorited_users.includes(:favorites).where(created_at: from...to).size
     }
-    # 閲覧数
-    @book_detail = Book.find_by(params[:id])
-    unless ViewCount.find_by(user_id: current_user.id, book_id: @book_detail.id)
-      current_user.view_counts.create(book_id: @book_detail.id)
-    end
   end
   # def index
     # to  = Time.current.at_beginning_of_day
