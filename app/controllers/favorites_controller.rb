@@ -13,5 +13,4 @@ class FavoritesController < ApplicationController
     favorite.destroy
     render 'replace_btn'
   end
-
 end
