@@ -9,7 +9,7 @@ class BooksController < ApplicationController
     @post_comment = PostComment.new
     # 閲覧数表示するためのやつ？
     # @book = Book.find(params[:id])
-    unless ViewCount.find_by(user_id: current_user.id, book_id: @book_detail.id)
+    unless ViewCount.find_by(user_id: current_user.id, book_id: @book.id)
       current_user.view_counts.create(book_id: @book.id)
     end
   end
